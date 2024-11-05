@@ -1,7 +1,8 @@
 package com.example.examen02.controller;
 
-import com.example.examen02.entity.Escuela;
-import com.example.examen02.service.EscuelaService;
+import com.example.examen02.entity.Coche;
+import com.example.examen02.entity.Tipo;
+import com.example.examen02.service.TipoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,21 +11,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 @RestController
-@RequestMapping("/api/escuelas")
+@RequestMapping("/api/tipos")
 @CrossOrigin(origins = "http://localhost:4200")
-public class EscuelaController {
+public class TipoController {
     @Autowired
-    private EscuelaService escuelaService;
+    private TipoService tipoService;
 
     @GetMapping
-    public ResponseEntity<List<Escuela>> readAll(){
+    public ResponseEntity<List<Tipo>> readAll(){
         try {
-            List<Escuela> escuelas = escuelaService.readAll();
-            if(escuelas.isEmpty()) {
+            List<Tipo> tipos = tipoService.readAll();
+            if(tipos.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(escuelas, HttpStatus.OK);
+            return new ResponseEntity<>(tipos, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: handle exception
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,9 +34,9 @@ public class EscuelaController {
 
     }
     @PostMapping
-    public ResponseEntity<Escuela> crear(@Valid @RequestBody Escuela escuela) {
+    public ResponseEntity<Tipo> crear(@Valid @RequestBody Tipo tipo) {
         try {
-            Escuela c = escuelaService.create(escuela);
+            Tipo c = tipoService.create(tipo);
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             // TODO: handle exception
@@ -43,9 +45,9 @@ public class EscuelaController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Escuela> getEscuelaId(@PathVariable("id") Long id){
+    public ResponseEntity<Tipo> getTipoId(@PathVariable("id") Long id){
         try {
-            Escuela c = escuelaService.read(id).get();
+            Tipo c = tipoService.read(id).get();
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             // TODO: handle exception
@@ -54,9 +56,9 @@ public class EscuelaController {
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Escuela> delEscuela(@PathVariable("id") Long id){
+    public ResponseEntity<Coche> delTipo(@PathVariable("id") Long id){
         try {
-            escuelaService.delete(id);
+            tipoService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             // TODO: handle exception
@@ -65,13 +67,13 @@ public class EscuelaController {
 
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEscuela(@PathVariable("id") Long id, @Valid @RequestBody Escuela escuela){
+    public ResponseEntity<?> updateTipo(@PathVariable("id") Long id, @Valid @RequestBody Tipo tipo){
 
-        Optional<Escuela> c = escuelaService.read(id);
+        Optional<Tipo> c = tipoService.read(id);
         if(c.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
-            return new ResponseEntity<>(escuelaService.update(escuela), HttpStatus.OK);
+            return new ResponseEntity<>(tipoService.update(tipo), HttpStatus.OK);
         }
 
     }

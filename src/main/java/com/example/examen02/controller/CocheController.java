@@ -1,9 +1,7 @@
 package com.example.examen02.controller;
 
-import com.example.examen02.entity.Escuela;
-import com.example.examen02.entity.Facultad;
-import com.example.examen02.service.EscuelaService;
-import com.example.examen02.service.FacultadService;
+import com.example.examen02.entity.Coche;
+import com.example.examen02.service.CocheService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,22 +10,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @RestController
-@RequestMapping("/api/facultades")
+@RequestMapping("/api/coches")
 @CrossOrigin(origins = "http://localhost:4200")
-public class FacultadController {
+public class CocheController {
     @Autowired
-    private FacultadService facultadService;
+    private CocheService cocheService;
 
     @GetMapping
-    public ResponseEntity<List<Facultad>> readAll(){
+    public ResponseEntity<List<Coche>> readAll(){
         try {
-            List<Facultad> facultades = facultadService.readAll();
-            if(facultades.isEmpty()) {
+            List<Coche> coches = cocheService.readAll();
+            if(coches.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(facultades, HttpStatus.OK);
+            return new ResponseEntity<>(coches, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: handle exception
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -35,9 +32,9 @@ public class FacultadController {
 
     }
     @PostMapping
-    public ResponseEntity<Facultad> crear(@Valid @RequestBody Facultad facultad) {
+    public ResponseEntity<Coche> crear(@Valid @RequestBody Coche coche) {
         try {
-            Facultad c = facultadService.create(facultad);
+            Coche c = cocheService.create(coche);
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             // TODO: handle exception
@@ -46,9 +43,9 @@ public class FacultadController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Facultad> getFacultadId(@PathVariable("id") Long id){
+    public ResponseEntity<Coche> getcocheId(@PathVariable("id") Long id){
         try {
-            Facultad c = facultadService.read(id).get();
+            Coche c = cocheService.read(id).get();
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             // TODO: handle exception
@@ -57,9 +54,9 @@ public class FacultadController {
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Escuela> delFacultad(@PathVariable("id") Long id){
+    public ResponseEntity<Coche> delcoche(@PathVariable("id") Long id){
         try {
-            facultadService.delete(id);
+            cocheService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             // TODO: handle exception
@@ -68,13 +65,13 @@ public class FacultadController {
 
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateFacultad(@PathVariable("id") Long id, @Valid @RequestBody Facultad facultad){
+    public ResponseEntity<?> updatecoche(@PathVariable("id") Long id, @Valid @RequestBody Coche coche){
 
-        Optional<Facultad> c = facultadService.read(id);
+        Optional<Coche> c = cocheService.read(id);
         if(c.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
-            return new ResponseEntity<>(facultadService.update(facultad), HttpStatus.OK);
+            return new ResponseEntity<>(cocheService.update(coche), HttpStatus.OK);
         }
 
     }

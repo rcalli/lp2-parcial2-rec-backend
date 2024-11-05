@@ -12,8 +12,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="facultades")
-public class Facultad {
+@Table(name="tipos")
+public class Tipo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -21,7 +21,7 @@ public class Facultad {
     @Column(name="nombre")
     private String nombre;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "facultad")
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "tipo")
     @JsonIgnore
-    private Set<Escuela> escuelas;
+    private Set<Coche> coches;
 }

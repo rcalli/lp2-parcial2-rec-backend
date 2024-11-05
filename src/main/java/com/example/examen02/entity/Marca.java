@@ -1,16 +1,19 @@
 package com.example.examen02.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="escuelas")
-public class Escuela {
+@Table(name="marcas")
+public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -18,7 +21,7 @@ public class Escuela {
     @Column(name="nombre")
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name="facultad_id", nullable = false)
-    private Facultad facultad;
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "marca")
+    @JsonIgnore
+    private Set<Coche> coches;
 }
